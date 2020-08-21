@@ -51,5 +51,28 @@ namespace AnimalShelter.Controllers
       _db.Animals.Remove(animalToDelete);
       _db.SaveChanges();
     }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Animal>> Get(string type, string gender, string name)
+    {
+      var query = _db.Animals.AsQueryable();
+
+      if (type != null)
+      {
+      query = query.Where(entry => entry.Type == type);
+      }
+
+      if (gender != null)
+      {
+      query = query.Where(entry => entry.Gender == gender);
+      }
+
+      if (name != null)
+      {
+      query = query.Where(entry => entry.Name == name);
+      }
+
+      return query.ToList();
+    }
   }
 }
