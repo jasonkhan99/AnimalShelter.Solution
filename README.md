@@ -21,7 +21,7 @@ Complete documentation of API endpoints and the further exploration you did.
 * Clone or dowwnload zip from github https://github.com/jasonkhan99/AnimalShelter.Solution.git
 * Open in a code editor
 * Navigate to project directory in the terminal
-* Once there enter `dotnet restore` and `dotnet build` then `dotnet run`
+* Once there enter `dotnet restore` and `dotnet ef database update` then `dotnet run`
 
 ### HTTP Requests
 
