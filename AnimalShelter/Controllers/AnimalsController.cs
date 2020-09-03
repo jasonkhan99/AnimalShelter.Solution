@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AnimalShelter.Models;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace AnimalShelter.Controllers
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Animal>> Get(string type, string gender, string name)
+    public async Task<ActionResult<IEnumerable<Animal>>> Get(string type, string gender, string name, [FromQuery] Pagination pagination)
     {
       var query = _db.Animals.AsQueryable();
 
@@ -36,8 +37,11 @@ namespace AnimalShelter.Controllers
       {
       query = query.Where(entry => entry.Name == name);
       }
-
-      return query.ToList();
+      List<Animal> queryResult = await query
+        .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+        .Take(pagination.PageSize)
+        .ToListAsync();
+      return queryResult;
     }
 
     [HttpPost]
